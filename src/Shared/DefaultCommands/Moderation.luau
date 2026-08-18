@@ -2463,14 +2463,21 @@ return {
 				description = "The jump power to use.",
 			},
 		},
+		 run = function(context, players, jumpPower)
+		 	for _, player in players do
+				local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
 
-		run = function(context, players, jumpPower)
-			for _, player in players do
-				if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
-					player.Character:FindFirstChildOfClass("Humanoid").JumpPower = jumpPower
+				if not humanoid then
+					continue
 				end
-			end
-		end,
+	
+				if humanoid.UseJumpPower then
+					humanoid.JumpPower = jumpPower 
+				else 
+					humanoid.JumpHeight = jumpPower ^ 2 / (2 * workspace.Gravity)
+				end
+		 	end
+		 end,
 	},
 	{
 		name = "starterjumppower",
